@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import {Button, UserProfile} from '../ui'
-import { Navbar } from '../../components/common'
+import {Button, UserProfile} from '../../ui'
+import { Navbar } from '..'
 
 const AdminHeader = ({ toggleSidebar }) => {
   const navbarItem = [ 
@@ -8,14 +8,13 @@ const AdminHeader = ({ toggleSidebar }) => {
       title: "Product",
       items: [
         { label: 'Category', href: '/admin/category' },
-        { label: 'Item 2', href: '/item2' },
-        { label: 'Item 3', href: '/item3' },
+        { label: 'Product', href: '/admin/product' },
       ]
     },
     {
-      title: "category2",
+      title: "Provider",
       items: [
-        { label: 'Item 1', href: '/item1' },
+        { label: 'Import', href: '/provider/importlist' },
         { label: 'Item 2', href: '/item2' },
         { label: 'Item 3', href: '/item3' },
       ]
@@ -57,7 +56,7 @@ const AdminHeader = ({ toggleSidebar }) => {
 
   return (
     <>
-    <header className="bg-green-700 p-4 sm:pb-1 items-center justify-between w-screen">
+    <header className="bg-green-700 p-4 sm:pb-1 items-center justify-between w-full">
     <div className="grid grid-cols-8 sm:grid-cols-4">
       <div className="col-span-1 col-start-1 hidden sm:block justify-start">
         {/* <img src="/path/to/your/logo.png" alt="Logo" className="h-8" /> */}

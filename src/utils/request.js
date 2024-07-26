@@ -7,11 +7,20 @@ const getToken = () => {
 
 const request = axios.create({
     baseURL: 'https://localhost:7104/api/',
-    headers: {'Authorization': getToken() ? `Bearer ${getToken()}` : ''},
+    headers: {
+        'Authorization': getToken() ? `Bearer ${getToken()}` : ''
+    },
     withCredentials: true, 
 })
 
-
+export const remove = async (path, options = {}) => {
+    const headers = {
+        'Authorization': `Bearer ${getToken()}`,
+        ...options.headers,
+    };
+    const response = await request.delete(path, { ...options, headers });
+    return response.data;
+};
 
 export const get = async (path, options = {}) => {
     const headers = {
@@ -39,6 +48,5 @@ export const put = async (path, data = {}, options = {}) => {
     const response = await request.put(path, data, { ...options, headers });
     return response.data;
 };
-
 
 export default request
