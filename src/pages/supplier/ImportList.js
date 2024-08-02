@@ -49,7 +49,6 @@ const ImportList = () => {
  const handlerCreateImport = () => {
     request.post('Import/create')
     .then(response => {
-        console.log(response)
         toast.success("Create successfuly.")
         navigate(`/supplier/importdetail/${response.data}`)
     })

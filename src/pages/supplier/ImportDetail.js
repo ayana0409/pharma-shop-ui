@@ -21,7 +21,7 @@ const ImportDetail = () => {
   const labelStatus = useRef();
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "productId", headerName: "ID" },
     { field: "productName", headerName: "Name", width: 200 },
     { field: "batchNumber", headerName: "BatchNumber", width: 100 },
     { field: "manufactureDate", headerName: "ManufactureDate", width: 100 },
@@ -265,6 +265,7 @@ const ImportDetail = () => {
             pageSize={5}
             selectionModel={selectedRow}
             onRowClick={handleRowClick}
+            getRowId={(row) => row.productId}
             className="max-h-4/5"
           />
         </CardContent>
@@ -285,13 +286,13 @@ const ImportDetail = () => {
           />
         </div>
       </Card>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         <div>
           <div className="mb-2">
             <label className="text-green-900 text-xl float-start">Name</label>
             <Input type="text" defaultValue={productName || ""} disabled />
           </div>
-          <div className="grid grid-cols-2 gap-2 mb-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
             <div>
               <label className="text-green-900 text-xl float-start">
                 *Manufacture date
@@ -318,8 +319,6 @@ const ImportDetail = () => {
                 }}
               />
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-2 mb-2">
             <div>
               <label className="text-green-900 text-xl float-start">
                 *Quantity
@@ -346,8 +345,6 @@ const ImportDetail = () => {
                 }}
               />
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-2 mb-2">
             <div>
               <label className="text-green-900 text-xl float-start">
                 *Batch code
@@ -385,7 +382,7 @@ const ImportDetail = () => {
         </div>
         <div>
           <div
-            className="grid grid-cols-2 gap-2 mb-2 text-start"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 text-start"
             style={{ height: "72px" }}
           >
             <label
@@ -402,7 +399,7 @@ const ImportDetail = () => {
             </label>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 mb-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
             <div>
               <label className="text-green-900 text-xl float-start">
                 Create date
