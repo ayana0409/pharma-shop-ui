@@ -3,25 +3,28 @@ import { Button, Input, UserProfile } from "../../ui";
 import { Navbar } from "..";
 import { useEffect, useState } from "react";
 import * as request from "../../../utils/request";
+import { useStore, actions } from "../../../store";
 
 const Header = ({ toggleSidebar }) => {
   const [navbarItems, setNavbarItems] = useState([]);
   const [keyword, setKeyword] = useState("");
-  const [itemsCount, setItemsCount] = useState(0);
+
+  const [state, dispatch] = useStore();
+  const { cartItemsCount, token } = state;
 
   const navigate = useNavigate();
 
   useEffect(() => {
     request
-      .get("shop/getnavbar")
+      .get("shop/navbar")
       .then((response) => {
-        const nav = response.map(category => ({
+        const nav = response.map((category) => ({
           ...category,
           items: [
-              { label: "All", href: `products/category/${category.id}` },
-              ...category.items
-          ]
-      }));
+            { label: "All", href: `products/category/${category.id}` },
+            ...category.items,
+          ],
+        }));
         setNavbarItems(nav);
       })
       .catch((error) => {
@@ -31,14 +34,18 @@ const Header = ({ toggleSidebar }) => {
 
   useEffect(() => {
     request
-      .get("cart/getitemscount")
+      .get("cart/items/count")
       .then((response) => {
-        setItemsCount(response)
+        dispatch(actions.setCartItemsCount(response))
       })
       .catch((error) => {
         console.log(error);
+        dispatch(actions.setCartItemsCount(0))
+        dispatch(actions.setUserDiscount(0))
+        dispatch(actions.setUserMaxDiscount(0))
       });
-  }, [itemsCount])
+
+  }, [dispatch, token]);
 
   const handleSearch = () => {
     if (keyword.trim()) {
@@ -68,7 +75,9 @@ const Header = ({ toggleSidebar }) => {
                   setKeyword(e.target.value);
                 }}
               />
-              <Button onClick={handleSearch} className="rounded-l-none">Search</Button>
+              <Button onClick={handleSearch} className="rounded-l-none">
+                Search
+              </Button>
             </div>
           </div>
 
@@ -98,7 +107,9 @@ const Header = ({ toggleSidebar }) => {
               <Link to="/">Home</Link>
             </Button>
             <Button primary className="rounded-lg mr-2">
-              <Link to="/cart">Cart <span>({itemsCount})</span></Link>
+              <Link to="/cart">
+                Cart <span>({cartItemsCount})</span>
+              </Link>
             </Button>
             <div className="md:flex hidden items-center">
               <UserProfile />

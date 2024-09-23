@@ -18,7 +18,7 @@ import ProductDetails from "../../components/common/ProductDetails";
 import { Input, Button, LoadingScreen } from "../../components/ui";
 import * as request from "../../utils/request";
 
-const AddProduct = () => {
+const EditProduct = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const { productId } = useParams("");
@@ -46,8 +46,10 @@ const AddProduct = () => {
   const setInitValue = useCallback((productId) => {
     if (productId) {
       request
-        .get(`product/getforupdate/?id=${productId}`)
+        .get(`product/${productId}`)
         .then(async (response) => {
+          console.log(response);
+          
           setName(response.name);
           setRequirePrescription(response.requirePrescription);
           setBrand(response.brand);
@@ -66,9 +68,9 @@ const AddProduct = () => {
           setPreviewUrls(response.images);
 
           const imageBlobs = [];
-
+          console.log(response);
+          
           await fetchImages(response.images, imageBlobs);
-
           setImageFiles(imageBlobs);
         })
         .catch((error) => {
@@ -146,7 +148,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     request
-      .get("category/categorytable")
+      .get("category/table")
       .then((response) => {
         setCategories(response);
       })
@@ -169,6 +171,8 @@ const AddProduct = () => {
           url: url,
           responseType: "blob",
         });
+        console.log(response);
+        
         imageBlobs.push(response.data);
       } catch (error) {
         console.error(`Error fetching image from ${url}:`, error);
@@ -196,7 +200,8 @@ const AddProduct = () => {
       requirePrescription: requirePrescription,
       details: details,
     });
-    formData.append("data", json);
+
+    formData.append("request", json);
 
     if (imageFiles) {
       imageFiles.forEach((file) => {
@@ -208,7 +213,7 @@ const AddProduct = () => {
 
     if (!productId) {
       request
-        .post("product/add", formData)
+        .post("product", formData)
         .then((response) => {
           toast.success(response.message);
           setLoading(false);
@@ -225,7 +230,7 @@ const AddProduct = () => {
         formData.append("id", productId);
 
         request
-          .put(`product/update/${productId}`, formData)
+          .put(`product/${productId}`, formData)
           .then((response) => {
             toast.success(response.message);
             setLoading(false);
@@ -251,7 +256,7 @@ const AddProduct = () => {
             setLoading(true);
 
             request
-              .remove(`product/delete/${productId}`)
+              .remove(`product/${productId}`)
               .then((response) => {
                 setLoading(false);
                 toast.success(response.message);
@@ -544,4 +549,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

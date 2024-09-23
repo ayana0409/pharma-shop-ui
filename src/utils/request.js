@@ -13,6 +13,22 @@ const request = axios.create({
     withCredentials: true, 
 })
 
+request.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response) {
+            const status = error.response.status;
+            if (status === 401 || status === 403) {
+                console.log(status);
+
+                
+                //window.location.href = '/';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
 export const remove = async (path, options = {}) => {
     const headers = {
         'Authorization': `Bearer ${getToken()}`,
@@ -28,6 +44,7 @@ export const get = async (path, options = {}) => {
         ...options.headers,
     };
     const response = await request.get(path, { ...options, headers });
+    
     return response.data;
 };
 

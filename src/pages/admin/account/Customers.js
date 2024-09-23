@@ -1,10 +1,36 @@
-import Table from "../../components/common/Table";
+import Table from "../../../components/common/Table";
 import { useEffect, useState, useCallback } from "react";
-import request from "../../utils/request";
-import { Button } from "../../components/ui";
+import * as request from "../../../utils/request";
+import { Button } from "../../../components/ui";
 import { Link, useNavigate } from "react-router-dom";
 
-const Product = () => {
+const Customers = () => {
+  const columns = [
+    {
+      Header: "Username",
+      accessor: "username",
+    },
+    {
+      Header: "Name",
+      accessor: "name",
+    },
+    {
+      Header: "Email",
+      accessor: "email",
+    },
+    {
+      Header: "Phone",
+      accessor: "phone",
+    },
+    {
+      Header: "Type",
+      accessor: "typeName",
+    },
+    {
+      Header: "#",
+      accessor: "action",
+    },
+  ];
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [keyword, setKeyword] = useState("");
@@ -16,19 +42,20 @@ const Product = () => {
   const fetchData = useCallback(
     (pageSize, pageIndex, keyword) => {
       request
-        .get('product', {
-          params:{
+        .get("accounts/panigation", {
+          params: {
             pageIndex,
             pageSize,
-            keyword
-          }
+            requireRole: false,
+            keyword,
+          },
         })
         .then((response) => {
-          const data = response.data.datas.map((item) => ({
+          const data = response.datas.map((item) => ({
             ...item,
             action: (
               <Link
-                to={`/admin/product/edit/${item.id}`}
+                to={`/admin/customerdetails/${item.id}`}
                 className="text-blue-500 hover:underline"
               >
                 Edit
@@ -36,7 +63,7 @@ const Product = () => {
             ),
           }));
           setData(data);
-          setTotalItems(response.data.total);
+          setTotalItems(response.total);
         })
         .catch((error) => {
           if (error.response.status === 403) {
@@ -65,42 +92,12 @@ const Product = () => {
     setKeyword(newKeyword);
   };
 
-  const columns = [
-    {
-      Header: "ID",
-      accessor: "id",
-    },
-    {
-      Header: "Name",
-      accessor: "name",
-    },
-    {
-      Header: "Packaging",
-      accessor: "packaging",
-    },
-    {
-      Header: "Brand",
-      accessor: "brand",
-    },
-    {
-      Header: "Price",
-      accessor: "price",
-    },
-    {
-      Header: "Category",
-      accessor: "categoryName",
-    },
-    {
-      Header: "#",
-      accessor: "action",
-    },
-  ];
   return (
-    <>
-      <h1 className="font-bold text-3xl text-green-800 mb-4">PRODUCT LIST</h1>
+    <div className="mx-4">
+      <h1 className="font-bold text-3xl text-green-800 mb-4">CUSTOMER LIST</h1>
       <div className="text-right">
         <Button primary className="rounded-lg ml-4 mb-4">
-          <Link to="/admin/product/add">Add</Link>
+          <Link to="/admin/customerdetails">Add</Link>
         </Button>
       </div>
       <Table
@@ -114,8 +111,8 @@ const Product = () => {
         onPageSizeChange={handlePageSizeChange}
         onKeywordChange={handleKeywordChange}
       />
-    </>
+    </div>
   );
 };
 
-export default Product;
+export default Customers;

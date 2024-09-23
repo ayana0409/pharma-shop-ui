@@ -2,19 +2,25 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import App from "./App";
-import {StoreProvider} from "./store";
+import { StoreProvider } from "./store";
+import { getClientId } from "./constants";
+
+const clientId = await getClientId();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <StoreProvider>
-      <BrowserRouter>
+  <StoreProvider>
+    <BrowserRouter>
+      <GoogleOAuthProvider clientId={clientId}>
         <App />
-      </BrowserRouter>
-    </StoreProvider>
+      </GoogleOAuthProvider>
+    </BrowserRouter>
+  </StoreProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -13,17 +13,19 @@ const ProductList = () => {
   const fetchProducts = async () => {
     const formData = new FormData();
 
-    const json = JSON.stringify({
-      pageIndex: currentPage - 1,
-      pageSize: size,
-      keyword: keyword || '',
-      categoryId: categoryId || 0,
-    });
+    const json = JSON.stringify();
 
     formData.append("request", json);
 
     request
-      .post("Shop/getproductpanigation", formData)
+      .get("shop/products", {
+        params: {
+          pageIndex: currentPage - 1,
+          pageSize: size,
+          keyword: keyword || "",
+          categoryId: categoryId || 0,
+        },
+      })
       .then((response) => {
         setProducts(response.datas);
         setTotalPages(Math.ceil(response.total / size));

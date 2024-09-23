@@ -1,11 +1,17 @@
 import Slider from "react-slick";
 import { Button } from "../../ui";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as request from "../../../utils/request";
 import { toast } from "react-toastify";
+import { useStore, actions } from "../../../store";
 
 const ProductCard = ({ product }) => {
   const datas = product;
+
+  const [state, dispatch] = useStore();
+  const { cartItemsCount, token } = state;
+
+  const navigate = useNavigate();
 
   const settings = {
     dots: true,
@@ -18,13 +24,21 @@ const ProductCard = ({ product }) => {
   const handleAddToCart = (e) => {
     e.preventDefault();
 
+    if (!token){
+      navigate('/login')
+      return
+    }
+
     request
-      .post("cart/additem", { 
-        productId: datas.id, 
-        quantity: 1 
+      .post("cart/items", {
+        productId: datas.id,
+        quantity: 1,
       })
-      .then(() => {
-        toast.success("Add successfuly")
+      .then((response) => {
+        if (response) {
+          dispatch(actions.setCartItemsCount(cartItemsCount + 1));
+        }
+        toast.success("Add successfuly");
       })
       .catch((error) => {
         console.log(error);

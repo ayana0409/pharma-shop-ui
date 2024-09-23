@@ -13,7 +13,7 @@ const Table = ({
   total,
   pageSizeOptions = [5, 20, 30, 40],
 }) => {
-  const canPreviousPage = (pageIndex + 1) * pageSize >= total;
+  const canPreviousPage = pageIndex !== 0 //(pageIndex + 1) * pageSize >= total;
   const canNextPage = (pageIndex + 1) * pageSize < total;
   const [key, setKey] = useState(keyword);
 
@@ -91,18 +91,21 @@ const Table = ({
             Page {pageIndex + 1} of {Math.ceil(total / pageSize)}
           </span>
         </div>
-        <div className="w-full text-center flex col-span-3 col-start-2">
-          <div className="w-7/12">
-            <Input
-              placeholder="Search..."
-              value={key}
-              onChange={(e) => setKey(e.target.value)}
-            />
+        {!onKeywordChange || (
+          <div className="w-full text-center flex col-span-3 col-start-2">
+            <div className="w-7/12">
+              <Input
+                placeholder="Search..."
+                value={key}
+                onChange={(e) => setKey(e.target.value)}
+              />  
+            </div>
+            <Button className="rounded-r-lg" onClick={hanldeSearch}>
+              Search
+            </Button>
           </div>
-          <Button className="rounded-r-lg" onClick={hanldeSearch}>
-            Search
-          </Button>
-        </div>
+        )}
+
         <div className="flex items-center">
           <span className="mr-2 text-sm text-gray-700">Show</span>
           <select

@@ -19,7 +19,7 @@ const Category = () => {
 
   const getData = () => {
     request
-      .get("Category/categorytable")
+      .get("Category/table")
       .then((response) => {
         setRows(response.data);
       })
@@ -52,7 +52,7 @@ const Category = () => {
 
   const handleAddData = () => {
     request
-      .post("category/addcategory", { id: 0, name, parentId })
+      .post("category", { id: 0, name, parentId })
       .then((response) => {
         getData();
         setParent(0);
@@ -71,7 +71,7 @@ const Category = () => {
 
   const handleUpdateData = () => {
     request
-      .put("category/update", { id: selectedRow, name, parentId })
+      .put(`category/${selectedRow}`, { id: selectedRow, name, parentId })
       .then((response) => {
         getData();
         setParent(0);
@@ -87,7 +87,7 @@ const Category = () => {
 
   const handleDeleteData = () => {
     request
-      .delete(`category/delete/${selectedRow}`)
+      .delete(`category/${selectedRow}`)
       .then((response) => {
         getData();
         setParent(0);

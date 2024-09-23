@@ -5,9 +5,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
-//import request from "../../utils/request";
 import * as request from "../../utils/request";
 import { Button, Input } from "../../components/ui";
+import { formatDate } from "../../utils/format";
 
 const ImportDetail = () => {
   const { importId } = useParams();
@@ -39,15 +39,6 @@ const ImportDetail = () => {
   const [quantity, setQuantity] = useState(0);
   const [cost, setCost] = useState(0);
 
-  const formatDateForInput = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  };
-
   const getImport = useCallback((importId) => {
     if (!importId || importId === 0) {
       return;
@@ -56,7 +47,7 @@ const ImportDetail = () => {
     request
       .get(`import/get/${importId}`)
       .then((response) => {
-        setImportDate(formatDateForInput(response.importDate));
+        setImportDate(formatDate(response.importDate));
         setTotalCost(response.totalCost);
         setStatus(response.status);
       })

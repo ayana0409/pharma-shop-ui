@@ -2,6 +2,7 @@ import { getToken, removeToken } from '../constants'
 import { toast } from 'react-toastify'
 
 
+
 const logout = (navigate) => {
   const token = getToken();
 

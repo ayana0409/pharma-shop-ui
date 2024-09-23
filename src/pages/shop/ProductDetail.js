@@ -1,12 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as request from "../../utils/request";
 import Slider from "react-slick";
 import { useLayoutEffect, useState } from "react";
 import { Button } from "../../components/ui";
 import { toast } from "react-toastify";
-
+import { useStore } from "../../store";
 
 const ProductDetail = () => {
+  const [state] = useStore();
+  const { token } = state;
+  const navigate = useNavigate();
+
   const { productId } = useParams();
   const [product, setProduct] = useState({});
   const settings = {
@@ -31,13 +35,18 @@ const ProductDetail = () => {
   }, [productId]);
 
   const handleAddToCart = () => {
+    if (!token){
+      navigate('/login')
+      return
+    }
+
     request
-      .post("cart/additem", { 
-        productId: product.id, 
-        quantity: 1 
+      .post("cart/items", {
+        productId: productId,
+        quantity: 1,
       })
       .then(() => {
-        toast.success("Add successfuly")
+        toast.success("Add successfuly");
       })
       .catch((error) => {
         console.log(error);
@@ -56,7 +65,7 @@ const ProductDetail = () => {
                   <img
                     className="w-full h-full max-h-96 object-cover rounded-lg"
                     src={image}
-                    alt={`Product Image ${index + 1}`}
+                    alt={`Product ${index + 1}`}
                   />
                 </div>
               ))}
@@ -75,7 +84,8 @@ const ProductDetail = () => {
             {product.quantity > 0 || "Out of Stock"}
           </p>
           <p className="text-xl text-red-500">
-            {!product.requirePrescription || "This product require prescription"}
+            {!product.requirePrescription ||
+              "This product require prescription"}
           </p>
           {product.requirePrescription || product.quantity <= 0 || (
             <div className="grid grid-cols-2 gap-4 my-2">

@@ -7,50 +7,31 @@ const AdminHeader = ({ toggleSidebar }) => {
     {
       title: "Product",
       items: [
-        { label: 'Category', href: '/admin/category' },
-        { label: 'Product', href: '/admin/product' },
+        { label: 'Categorys', href: '/admin/category' },
+        { label: 'Products', href: '/admin/product' },
       ]
     },
     {
-      title: "Provider",
+      title: "Order",
       items: [
-        { label: 'Import', href: '/provider/importlist' },
-        { label: 'Item 2', href: '/item2' },
-        { label: 'Item 3', href: '/item3' },
+        { label: 'Orders', href: '/admin/orders' }
       ]
     },
     {
-      title: "category2",
+      title: "Account",
       items: [
-        { label: 'Item 1', href: '/item1' },
-        { label: 'Item 2', href: '/item2' },
-        { label: 'Item 3', href: '/item3' },
+        { label: 'Managers', href: '/admin/managers' },
+        { label: 'Customers', href: '/admin/customers' },
+        { label: 'Types', href: '/admin/types' }
       ]
     },
     {
-      title: "category2",
+      title: "Statistic",
       items: [
-        { label: 'Item 1', href: '/item1' },
-        { label: 'Item 2', href: '/item2' },
-        { label: 'Item 3', href: '/item3' },
+        { label: 'Product', href: '/admin/statistic/product' },
+        { label: 'Customer', href: '/admin/statistic/customer' },
       ]
     },
-    {
-      title: "category2",
-      items: [
-        { label: 'Item 1', href: '/item1' },
-        { label: 'Item 2', href: '/item2' },
-        { label: 'Item 3', href: '/item3' },
-      ]
-    },
-    {
-      title: "category2",
-      items: [
-        { label: 'Item 1', href: '/item1' },
-        { label: 'Item 2', href: '/item2' },
-        { label: 'Item 3', href: '/item3' },
-      ]
-    }
   ]
 
 
