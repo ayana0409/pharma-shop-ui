@@ -6,7 +6,7 @@ const getToken = () => {
 };
 
 const request = axios.create({
-    baseURL: 'https://localhost:7104/api/',
+    baseURL: 'http://26.139.159.129:5024/api/',
     headers: {
         'Authorization': getToken() ? `Bearer ${getToken()}` : ''
     },

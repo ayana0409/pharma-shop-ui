@@ -27,6 +27,7 @@ const ProductList = () => {
         },
       })
       .then((response) => {
+        console.log(response)
         setProducts(response.datas);
         setTotalPages(Math.ceil(response.total / size));
       })

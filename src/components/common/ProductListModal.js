@@ -78,12 +78,15 @@ const ProductListModal = ({ className, children, onClickAdd, disabled }) => {
   const fetchData = useCallback(
     (pageSize, pageIndex, keyword) => {
       request
-        .post("product/pagination", {
-          pageIndex: pageIndex,
+      .get("product", {
+        params: {
+          pageIndex: pageIndex - 1,
           pageSize: pageSize,
-          keyword: keyword,
-        })
+          keyword: keyword || "",
+        }})
         .then((response) => {
+          
+        console.log(response);
           const data = response.data.datas.map((item) => ({
             ...item,
             action: (
