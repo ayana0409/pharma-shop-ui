@@ -16,8 +16,8 @@ Pharma Shop là một ứng dụng thương mại điện tử chuyên cung cấ
 https://pharmashop-k2d0.onrender.com/
 
 # Tài khoản thử nghiệm
-  administrator - Admin@123
-  guest - Guest@123
+- administrator - Admin@123
+- guest - Guest@123
 
 ## 📦 Cài đặt & chạy dự án
 ```bash
