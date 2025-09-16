@@ -70,6 +70,9 @@ const AdminHeader = ({ toggleSidebar }) => {
 
       <div className="hidden md:flex col-span-1 col-start-4 items-center justify-end">
         <Button primary className="rounded-lg mr-2">
+          <Link to="/">Home</Link>
+        </Button>
+        <Button primary className="rounded-lg mr-2">
           <Link to="/admin">Dashboard</Link>
         </Button>
         <div className="md:flex hidden items-center">

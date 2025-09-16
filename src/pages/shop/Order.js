@@ -32,6 +32,17 @@ const Order = () => {
 
   const submitOrder = () => {
     setLoading(true);
+    console.log({
+        addressId,
+        fullName,
+        phoneNumber,
+        address,
+        email,
+        cartItems: selectedItems,
+        totalPrice: paymentTotal,
+        paymentMethod,
+      });
+    
     request
       .post("orders", {
         addressId,

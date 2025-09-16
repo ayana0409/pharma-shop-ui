@@ -58,7 +58,7 @@ const UserProfile = () => {
       setUser({ fullName: "User", point: 0, type: "none" });
     }
   }, [state.token, dispatch]);
-  
+
   return (
     <div className="relative inline-block text-left z-50" ref={dropdownRef}>
       <Button
@@ -93,12 +93,20 @@ const UserProfile = () => {
               Max discount: {state.userMaxDiscount}
             </span>
             <div className="border-b"></div>
-            {state.userRole !== null ? <Link
-              to="/admin"
-              className="block text-gray-300 hover:bg-green-500 px-4 py-2"
-            >
-              Admin
-            </Link> : null}
+            {state.userRole !== null ? <>
+              <Link
+                to="/admin"
+                className="block text-gray-300 hover:bg-green-500 px-4 py-2"
+              >
+                Admin
+              </Link>
+              <Link
+                to="/supplier"
+                className="block text-gray-300 hover:bg-green-500 px-4 py-2"
+              >
+                Supplier
+              </Link>
+            </> : null}
             <div className="border-b"></div>
             <Link
               to="/user/orders"

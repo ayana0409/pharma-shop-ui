@@ -1,13 +1,18 @@
 import axios from "axios";
 import { getToken } from "../constants";
 
-const request = axios.create({
-    baseURL: 'http://localhost:5024/api/',
-    headers: {
-        'Authorization': `Bearer ${getToken()}`
-    },
+var request = axios.create({
+    baseURL: 'https://pharmashop-api.onrender.com/api/',
     withCredentials: true, 
 })
+
+request.interceptors.request.use(config => {
+  const token = getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 request.interceptors.response.use(
     response => response,
@@ -23,7 +28,7 @@ request.interceptors.response.use(
     }
 );
 
-export const remove = async (path, options = {}) => {
+export var remove = async (path, options = {}) => {
     const headers = {
         'Authorization': `Bearer ${getToken()}`,
         ...options.headers,
@@ -32,7 +37,7 @@ export const remove = async (path, options = {}) => {
     return response.data;
 };
 
-export const get = async (path, options = {}) => {
+export var get = async (path, options = {}) => {
     const headers = {
         'Authorization': `Bearer ${getToken()}`,
         ...options.headers,
@@ -42,7 +47,7 @@ export const get = async (path, options = {}) => {
     return response.data;
 };
 
-export const post = async (path, data = {}, options = {}) => {
+export var post = async (path, data = {}, options = {}) => {
     const headers = {
         'Authorization': `Bearer ${getToken()}`,
         ...options.headers,
@@ -51,7 +56,7 @@ export const post = async (path, data = {}, options = {}) => {
     return response.data;
 };
 
-export const put = async (path, data = {}, options = {}) => {
+export var put = async (path, data = {}, options = {}) => {
     const headers = {
         'Authorization': `Bearer ${getToken()}`,
         ...options.headers,

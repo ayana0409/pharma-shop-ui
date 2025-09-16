@@ -8,16 +8,7 @@ const SupplierHeader = ({ toggleSidebar }) => {
       title: "Import",
       items: [
         { label: 'List', href: '/supplier/importlist' },
-        { label: 'Add', href: '/supplier/importdetail' },
-        { label: 'Item 3', href: '/item3' },
-      ]
-    },
-    {
-      title: "category2",
-      items: [
-        { label: 'Item 1', href: '/item1' },
-        { label: 'Item 2', href: '/item2' },
-        { label: 'Item 3', href: '/item3' },
+        { label: 'Add', href: '/supplier/importdetail' }
       ]
     }
   ]
@@ -51,6 +42,9 @@ const SupplierHeader = ({ toggleSidebar }) => {
         </div>
 
       <div className="hidden md:flex col-span-1 col-start-4 items-center justify-end">
+        <Button primary className="rounded-lg mr-2">
+          <Link to="/">Home</Link>
+        </Button>
         <Button primary className="rounded-lg mr-2">
           <Link to="/supplier">Dashboard</Link>
         </Button>
