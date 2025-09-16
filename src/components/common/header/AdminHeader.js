@@ -1,21 +1,26 @@
 import { Link } from "react-router-dom";
 import {Button, UserProfile} from '../../ui'
 import { Navbar } from '..'
+import { useStore } from "../../../store";
 
 const AdminHeader = ({ toggleSidebar }) => {
+  const [state, dispatch] = useStore();
+
   const navbarItem = [ 
     {
       title: "Product",
       items: [
         { label: 'Categorys', href: '/admin/category' },
         { label: 'Products', href: '/admin/product' },
-      ]
+      ],
+      deactive: !state.userRole
     },
     {
       title: "Order",
       items: [
         { label: 'Orders', href: '/admin/orders' }
-      ]
+      ],
+      deactive: !state.userRole
     },
     {
       title: "Account",
@@ -23,17 +28,18 @@ const AdminHeader = ({ toggleSidebar }) => {
         { label: 'Managers', href: '/admin/managers' },
         { label: 'Customers', href: '/admin/customers' },
         { label: 'Types', href: '/admin/types' }
-      ]
+      ],
+      deactive: state.userRole === 'SuperAdmin' ? false : true
     },
     {
       title: "Statistic",
       items: [
         { label: 'Product', href: '/admin/statistic/product' },
         { label: 'Customer', href: '/admin/statistic/customer' },
-      ]
+      ],
+      deactive: !state.userRole
     },
   ]
-
 
   return (
     <>

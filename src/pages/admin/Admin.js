@@ -2,12 +2,21 @@ import { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import * as request from "../../utils/request";
 import { formatDate } from "../../utils/format";
+import { useStore } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const chartRef = useRef(null);
   const [data, setData] = useState([]);
+  const [state, dispatch] = useStore();
+  const navigation = useNavigate();
 
   useEffect(() => {
+    console.log(state.userRole);
+    
+    if (!state.userRole)
+      navigation("/");
+
     request
       .get("report/weekly-revenue")
       .then((response) => {
@@ -16,7 +25,7 @@ const Admin = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [state.userRole, navigation]);
 
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);

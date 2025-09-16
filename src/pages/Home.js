@@ -9,7 +9,6 @@ const Home = () => {
     request
       .get("shop/homeProduct")
       .then((response) => {
-        console.log(response);
         setData(response);
       })
       .catch((error) => {

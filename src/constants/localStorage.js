@@ -17,21 +17,19 @@ export const setTokenWithExpiry = (value, ttl) => {
       value: value,
       expiry: now.getTime() + ttl,
     }
-    localStorage.setItem('token', JSON.stringify(item))
+    localStorage.setItem('pharma-shop-token', JSON.stringify(item))
 }
 
 export const getTokenWithExpiry = () => {
-    const itemStr = localStorage.getItem('token')
+    const itemStr = localStorage.getItem('pharma-shop-token')  
 
     if (!itemStr) {
         return null
     }
-
     const item = JSON.parse(itemStr)
     const now = new Date()
-
     if (now.getTime() > item.expiry) {
-        localStorage.removeItem('token')
+        localStorage.removeItem('pharma-shop-token')
         return null
     }
 
@@ -39,5 +37,5 @@ export const getTokenWithExpiry = () => {
 }
 
 export const removeToken = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('pharma-shop-token');
 }

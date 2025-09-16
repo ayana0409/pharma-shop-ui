@@ -25,7 +25,6 @@ const Login = () => {
 
   useEffect(() => {
     const token = state.token;
-
     if (token) navigate("/");
   });
 
@@ -47,13 +46,15 @@ const Login = () => {
           toast.error(`Login failed: ${error.response.data}`);
           return;
         }
-
+        
         const token = response.token;
+        
         setToken(token, 604800000);
         
         const from = location.state?.from?.pathname || "/";
         navigate(from, { replace: true });
 
+        dispatch(actions.setUserRole(response.role));
         dispatch(actions.setToken(token));
 
         toast.success("Login successful");

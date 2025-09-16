@@ -3,14 +3,16 @@ import {
   SET_TOKEN,
   SET_CART_ITEMS_COUNT,
   SET_USER_DISCOUNT,
-  SET_USER_MAX_DISCOUNT
+  SET_USER_MAX_DISCOUNT,
+  SET_USER_ROLE,
 } from "./constants";
 
 const initState = {
   token: getToken() ?? "",
   cartItemsCount: 0,
   userDiscount: 0,
-  userMaxDiscount: 0
+  userMaxDiscount: 0,
+  userRole: null,
 };
 
 function reducer(state, action) {
@@ -30,10 +32,15 @@ function reducer(state, action) {
         ...state,
         userDiscount: action.payload,
       };
-      case SET_USER_MAX_DISCOUNT:
+    case SET_USER_MAX_DISCOUNT:
       return {
         ...state,
         userMaxDiscount: action.payload,
+      };
+    case SET_USER_ROLE:
+      return {
+        ...state,
+        userRole: action.payload,
       };
     default:
       throw new Error("Invalid action.");

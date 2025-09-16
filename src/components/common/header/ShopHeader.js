@@ -21,8 +21,8 @@ const Header = ({ toggleSidebar }) => {
         const nav = response.map((category) => ({
           ...category,
           items: [
-            { label: "All", href: `products/category/${category.id}` },
-            ...category.items,
+            { label: "All", href: `products/category/${category.id}`},
+            ...category.items
           ],
         }));
         setNavbarItems(nav);

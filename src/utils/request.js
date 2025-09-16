@@ -1,14 +1,10 @@
 import axios from "axios";
-import { getToken as getTokenFromLocalStorage } from "../constants";
-
-const getToken = () => {
-    return getTokenFromLocalStorage();
-};
+import { getToken } from "../constants";
 
 const request = axios.create({
-    baseURL: 'http://26.139.159.129:5024/api/',
+    baseURL: 'http://localhost:5024/api/',
     headers: {
-        'Authorization': getToken() ? `Bearer ${getToken()}` : ''
+        'Authorization': `Bearer ${getToken()}`
     },
     withCredentials: true, 
 })
@@ -20,9 +16,7 @@ request.interceptors.response.use(
             const status = error.response.status;
             if (status === 401 || status === 403) {
                 console.log(status);
-
-                
-                //window.location.href = '/';
+                window.location.href = '/';
             }
         }
         return Promise.reject(error);

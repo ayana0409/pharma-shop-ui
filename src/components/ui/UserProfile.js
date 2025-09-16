@@ -1,13 +1,11 @@
-import { useState, useRef, useEffect, useLayoutEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
-
 import * as request from "../../utils/request";
 import { handleLogout as logout } from "../../constants";
 import { useStore, actions } from "../../store";
 import { getToken } from "../../constants";
 import Button from "./Button";
-
 const UserProfile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState({
@@ -26,6 +24,7 @@ const UserProfile = () => {
 
   const handleLogout = () => {
     dispatch(actions.setToken(""));
+    dispatch(actions.setUserRole(null));
     logout(navigate);
   };
 
@@ -43,7 +42,7 @@ const UserProfile = () => {
     };
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (state.token !== "") {
       request
         .get("user/getuserinfo")
@@ -59,9 +58,9 @@ const UserProfile = () => {
       setUser({ fullName: "User", point: 0, type: "none" });
     }
   }, [state.token, dispatch]);
-
+  
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div className="relative inline-block text-left z-50" ref={dropdownRef}>
       <Button
         onClick={toggleDropdown}
         primary
@@ -93,6 +92,13 @@ const UserProfile = () => {
             <span className="block text-gray-300 px-4 py-2">
               Max discount: {state.userMaxDiscount}
             </span>
+            <div className="border-b"></div>
+            {state.userRole !== null ? <Link
+              to="/admin"
+              className="block text-gray-300 hover:bg-green-500 px-4 py-2"
+            >
+              Admin
+            </Link> : null}
             <div className="border-b"></div>
             <Link
               to="/user/orders"
